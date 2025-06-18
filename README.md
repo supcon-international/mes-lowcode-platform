@@ -9,5 +9,3 @@ Run Command:
 pnpm run dev
 ```
 
-# Screenshots of the app
-
