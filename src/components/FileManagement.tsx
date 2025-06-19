@@ -109,12 +109,17 @@ const FileManagement: React.FC = () => {
     }
   };
 
-  const getLanguage = (extension?: string): string => {
-    switch (extension) {
-      case 'tsx':
-      case 'ts':
+  const getLanguage = (fileType?: string, extension?: string): string => {
+    switch (fileType) {
+      case 'typescript':
+        if (extension === 'tsx') {
+          return 'typescriptreact';
+        }
         return 'typescript';
-      case 'js':
+      case 'javascript':
+        if (extension === 'jsx') {
+          return 'javascriptreact';
+        }
         return 'javascript';
       case 'json':
         return 'json';
@@ -122,9 +127,8 @@ const FileManagement: React.FC = () => {
         return 'sql';
       case 'css':
         return 'css';
-      case 'md':
+      case 'markdown':
         return 'markdown';
-      case 'yml':
       case 'yaml':
         return 'yaml';
       default:
@@ -306,7 +310,7 @@ const FileManagement: React.FC = () => {
                           Search Results ({filteredFiles.length})
                         </h3>
                         {filteredFiles.map(file => {
-                          const Icon = getFileIcon(file.type);
+                          const Icon = getFileIcon(file.name.split('.').pop());
                           return (
                             <div
                               key={file.path}
@@ -349,7 +353,7 @@ const FileManagement: React.FC = () => {
                   <div className="p-4 border-b border-border bg-background/50">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        {React.createElement(getFileIcon(selectedFileData.type), { className: "w-5 h-5" })}
+                        {React.createElement(getFileIcon(selectedFileData.name.split('.').pop()), { className: "w-5 h-5" })}
                         <div>
                           <h3 className="font-medium">{selectedFileData.name}</h3>
                           <p className="text-sm text-muted-foreground">{selectedFileData.path}</p>
@@ -388,7 +392,7 @@ const FileManagement: React.FC = () => {
                   <div className="flex-1 overflow-hidden">
                     <Monaco
                       height="100%"
-                      language={getLanguage(selectedFileData.type)}
+                      language={getLanguage(selectedFileData.type, selectedFileData.name.split('.').pop())}
                       theme="vs-light"
                       value={fileContent}
                       onChange={handleContentChange}

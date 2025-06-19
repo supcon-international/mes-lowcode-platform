@@ -356,6 +356,7 @@ const AppPreview: React.FC = () => {
               <Button
                 variant="outline"
                 size="sm"
+                onClick={() => window.open('http://localhost:5173', '_blank')}
                 className="gap-2"
               >
                 <ExternalLink className="w-4 h-4" />

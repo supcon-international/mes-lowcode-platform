@@ -146,13 +146,17 @@ const CodeGeneration: React.FC = () => {
     setIsGenerating(false);
   };
 
-  const generateFilesForStep = (step: GenerationStep): Array<{ name: string; path: string; content: string; type: string }> => {
-    return step.files.map(fileName => ({
-      name: fileName.split('/').pop() || fileName,
-      path: fileName,
-      content: generateFileContent(fileName, step.id),
-      type: getFileType(fileName)
-    }));
+  const generateFilesForStep = (step: GenerationStep): Array<{ name: string; path: string; content: string; type: string; extension: string }> => {
+    return step.files.map(fileName => {
+      const extension = fileName.split('.').pop() || '';
+      return {
+        name: fileName.split('/').pop() || fileName,
+        path: fileName,
+        content: generateFileContent(fileName, step.id),
+        type: getFileType(fileName),
+        extension: extension
+      };
+    });
   };
 
   const generateFileContent = (fileName: string, stepId: string): string => {

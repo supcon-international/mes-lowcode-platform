@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, FileEdit, Download, Sparkles, CheckCircle, RefreshCw } from 'lucide-react';
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
+import Editor from '@monaco-editor/react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
@@ -435,11 +436,35 @@ ${getComplianceRequirements(formData.industry)}
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1 p-0">
-                  <Textarea
+                  <Editor
+                    height="100%"
+                    language="markdown"
                     value={editContent}
-                    onChange={(e) => setEditContent(e.target.value)}
-                    className="h-full w-full resize-none border-0 focus:ring-0 font-mono text-sm"
-                    placeholder="Edit your PRD content here..."
+                    onChange={(value) => setEditContent(value || '')}
+                    options={{
+                      minimap: { enabled: false },
+                      wordWrap: 'on',
+                      showUnused: false,
+                      folding: false,
+                      lineNumbers: 'off',
+                      glyphMargin: false,
+                      scrollBeyondLastLine: false,
+                      renderLineHighlight: 'none',
+                      overviewRulerLanes: 0,
+                      hideCursorInOverviewRuler: true,
+                      scrollbar: {
+                        vertical: 'hidden',
+                        horizontal: 'hidden',
+                      },
+                      lineDecorationsWidth: 0,
+                      lineNumbersMinChars: 0,
+                      padding: {
+                        top: 10,
+                        bottom: 10,
+                      },
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: 14,
+                    }}
                   />
                 </CardContent>
               </Card>
